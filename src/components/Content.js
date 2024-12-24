@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { getContentsData } from '../apis';
-import { getImage } from '../utils';
+import React, { useCallback, useEffect, useState } from "react";
+import { getContentsData } from "../apis";
+import { getImage } from "../utils";
+import ReactQuill from "react-quill-new";
 
 const ContentSection = () => {
   const [contents, setContents] = useState([]);
@@ -23,22 +24,38 @@ const ContentSection = () => {
   }
 
   return (
-    <section className="p-8 text-white bg-gray-800">
-      <div>
+    <section className="p-8  text-white bg-gray-800  ">
+      <div className=" py-10">
         {contents.map((item, index) => (
           <div
             key={index}
-            className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-start mb-8`}
+            className={`flex gap-10 ${
+              index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+            } items-start mb-8`}
           >
-            <div className={`w-1/2 ${index % 2 !== 0 ? 'p-8 ' : ''}`}>
+            <div
+              className={`w-[40%] ${index % 2 !== 0 ? " " : ""} rounded-lg`}
+              style={{
+                boxShadow: "15px 15px 20px rgba(255, 255, 255, 0.5)", // White shadow
+              }}
+            >
               <img
                 src={getImage(item.image)}
                 alt={item.text}
-                className={`rounded-lg w-100 h-auto mx-auto`} 
+                className={`rounded-lg w-[450px] h-[400px] `}
               />
             </div>
-            <div className={`w-1/2 text-left ${index % 2 === 0 ? 'pl-8' : 'pr-8 pt-8'}`}>
-              <p className="text-lg">{item.text}</p>
+
+            <div className={`w-[60%] `}>
+              <ReactQuill
+                value={item.text}
+                readOnly={true}
+                theme=""
+                style={{
+                  fontSize: '24px', // Example font size
+                  lineHeight: '1.8', // Example line height
+                }}
+              />
             </div>
           </div>
         ))}
