@@ -32,6 +32,15 @@ export const apiPost = async (url, data = {}) => {
   }
 };
 
+export const apiDelete = async (url) => {
+  try {
+    const response = await instance().delete(url);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const apiPostFile = async (url, data = {}) => {
   try {
     const response = await fileInstance().post(url, data);

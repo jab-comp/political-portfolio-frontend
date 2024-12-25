@@ -1,4 +1,4 @@
-import { apiGet, apiPostFile, apiPost, apiPutFile } from "./axios";
+import { apiGet, apiPostFile, apiPost, apiPutFile, apiDelete } from "./axios";
 
 // admin apis
 export const login = async ({ username, password }) => {
@@ -58,11 +58,18 @@ export const getAdminTitlesData = async () => {
   return data;
 }
 
+export const deleteTitle = async (id) => {
+  return await apiDelete(`/admin/titles/${id}`)
+}
+
 export const getAdminContentsData = async () => {
   const { data } = await apiGet('/admin/contents')
   return data;
 }
 
+export const deleteContent = async (id) => {
+  return await apiDelete(`/admin/contents/${id}`)
+}
 
 // public apis
 export const getTitlesData = async () => {

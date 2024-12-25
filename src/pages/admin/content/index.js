@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAdminContentsData } from "../../../apis";
+import { deleteContent, getAdminContentsData } from "../../../apis";
 import ReactQuill from 'react-quill-new'
 import { getImage } from "../../../utils";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const Contents = () => {
   const navigate = useNavigate();
   const [contents, setContents] = useState([])
+  const [deleteId, setDeleteId] = useState('')
 
   const fetchContentsData = useCallback(async () => {
     const contents = await getAdminContentsData()
@@ -19,6 +21,17 @@ const Contents = () => {
   }, [fetchContentsData])
 
   const handleAdd = () => navigate('/dashboard/contents/add')
+
+  const handleDelete = async () => {
+    const { status } = await deleteContent(deleteId)
+    
+    if(status){
+      fetchContentsData()
+    }
+    setDeleteId('')
+  }
+
+  const handleCancel = () => setDeleteId('')
 
   return (
     <section className="content-section">
@@ -62,11 +75,23 @@ const Contents = () => {
                 >
                   Edit
                 </button>
+                <button
+                  onClick={() => setDeleteId(item._id)}
+                  className="bg-red text-black px-4 py-2 rounded-lg"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {deleteId && <ConfirmationModal
+        text="Are you sure you want to delete this item?"
+        onConfirm={() => handleDelete()}
+        onCancel={handleCancel}
+      />}
     </section>
   )
 }
