@@ -16,6 +16,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.ql-code-block-container {
+  font-size: 1rem !important; /* Default for small screens */
+  font-weight: 500 !important;
+  text-align: left !important;
+  line-height: 40px !important;
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) { /* sm */
+    font-size: 1rem !important;
+    line-height: 30px !important;
+  }
+
+  @media (min-width: 1024px) { /* lg */
+    font-size: 1.2rem !important;
+  }
+  @media (min-width: 1280px) { /* xl */
+    font-size: 1.5rem !important;
+  }
+  @media (min-width: 1536px) { /* 2xl */
+    font-size: 1.8rem !important;
+  }
+}
+
+.ql-code-block-container{
+  line-height: 50;
+}
+
+
 
 .ql-editor {
   font-size: 3rem !important; /* Equivalent to text-6xl */

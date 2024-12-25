@@ -78,7 +78,7 @@ const ContentSection = () => {
             <img
               src={getImage(item.image)}
               alt={item.text}
-              className="w-full md:w-1/2 rounded shadow-md mb-6 md:mb-0"
+              className="w-full md:w-1/2 lg:h-[450px]   rounded shadow-md mb-6 md:mb-0"
             />
             <div className="md:ml-6">
               <p className="text-gray-600">

@@ -25,7 +25,7 @@ const HomePage = () => {
 
       {/* Hero Section */}
       <header
-        className="relative w-full h-screen flex flex-col items-center justify-center "
+        className="relative w-full lg:h-[90vh] h-auto flex py-10  flex-col items-center justify-center"
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgCover})`,
           backgroundSize: "cover", // Ensures the image covers the entire screen
