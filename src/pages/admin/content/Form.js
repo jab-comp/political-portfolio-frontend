@@ -3,8 +3,16 @@ import ReactQuill from "react-quill-new"; // Rich Text editor
 import "react-quill-new/dist/quill.snow.css"; // Import Quill CSS
 import { useDropzone } from "react-dropzone";
 import { useNavigate, useParams } from "react-router-dom";
-import { createContent, createTitle, getContentData, getTitleData, updateContent, updateTitle } from "../../../apis";
+import {
+  createContent,
+  createTitle,
+  getContentData,
+  getTitleData,
+  updateContent,
+  updateTitle,
+} from "../../../apis";
 import { getImage } from "../../../utils";
+import { GoArrowLeft } from "react-icons/go";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -15,7 +23,7 @@ const Form = () => {
     text: "",
     order: 0,
     image: null,
-    published: false
+    published: false,
   });
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -23,16 +31,21 @@ const Form = () => {
   const [fileError, setFileError] = useState(false);
 
   const fetchContent = useCallback(async () => {
-    const content = await getContentData(id)
-    setFormData({ text: content.text, published: content.published, image: null, order: content.order });
+    const content = await getContentData(id);
+    setFormData({
+      text: content.text,
+      published: content.published,
+      image: null,
+      order: content.order,
+    });
     setImagePreview(getImage(content.image));
-  }, [id])
+  }, [id]);
 
   useEffect(() => {
     if (id) {
-      fetchContent()
+      fetchContent();
     }
-  }, [fetchContent, id])
+  }, [fetchContent, id]);
 
   useEffect(() => {
     if (formData.image) {
@@ -58,7 +71,11 @@ const Form = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.text.trim() || formData.text === "<p><br></p>" || formData.text === "") {
+    if (
+      !formData.text.trim() ||
+      formData.text === "<p><br></p>" ||
+      formData.text === ""
+    ) {
       setTextError(true);
       return;
     }
@@ -95,6 +112,17 @@ const Form = () => {
 
   return (
     <form onSubmit={handleOnSubmit} className="space-y-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold mb-4">{` ${
+          id ? "Update" : "Add New"
+        } Content`}</h1>
+        <div>
+          <button onClick={()=> navigate("/dashboard")} className="btn bg-red-500 text-white px-2 py-[6px] rounded flex items-center gap-1">
+            <GoArrowLeft size={20} />
+            Cancle
+          </button>
+        </div>
+      </div>
       <div className="form-group">
         <label className="block text-sm font-medium text-gray-700">Text</label>
         <ReactQuill
@@ -105,37 +133,47 @@ const Form = () => {
             setTextError(false);
           }}
         />
-        {textError && (
-          <p className="text-red-500 text-xs">Text is required</p>
-        )}
+        {textError && <p className="text-red-500 text-xs">Text is required</p>}
       </div>
 
-      {id &&
+      {id && (
         <div className="form-group mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Order
+          </label>
           <input
             type="number"
-            value={formData.order || ''}
+            value={formData.order || ""}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             onChange={(e) => {
               const value = parseInt(e.target.value, 10);
-              setFormData((prev) => ({ ...prev, order: isNaN(value) ? '' : value }));
+              setFormData((prev) => ({
+                ...prev,
+                order: isNaN(value) ? "" : value,
+              }));
             }}
           />
         </div>
-
-      }
+      )}
 
       <div className="form-group">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Published</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Published
+        </label>
         <div
-          className={`relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer transition-colors duration-300 ${formData.published ? "bg-blue-500" : "bg-gray-300"
-            }`}
-          onClick={() => handleInputChange({ target: { name: "published", value: !formData.published } })}
+          className={`relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer transition-colors duration-300 ${
+            formData.published ? "bg-blue-500" : "bg-gray-300"
+          }`}
+          onClick={() =>
+            handleInputChange({
+              target: { name: "published", value: !formData.published },
+            })
+          }
         >
           <span
-            className={`inline-block w-5 h-5 transform bg-white rounded-full transition-transform duration-300 ${formData.published ? "translate-x-5" : "translate-x-0"
-              }`}
+            className={`inline-block w-5 h-5 transform bg-white rounded-full transition-transform duration-300 ${
+              formData.published ? "translate-x-5" : "translate-x-0"
+            }`}
           ></span>
         </div>
       </div>
@@ -151,12 +189,14 @@ const Form = () => {
         </div>
         {imagePreview && (
           <div className="mt-2">
-            <img src={imagePreview} alt="Preview" className="w-40 h-40 object-cover" />
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-40 h-40 object-cover"
+            />
           </div>
         )}
-        {fileError && (
-          <p className="text-red-500 text-xs">Image is required</p>
-        )}
+        {fileError && <p className="text-red-500 text-xs">Image is required</p>}
       </div>
 
       <div className="form-group">

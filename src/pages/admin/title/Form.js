@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { useNavigate, useParams } from "react-router-dom";
 import { createTitle, getTitleData, updateTitle } from "../../../apis";
 import { getImage } from "../../../utils";
+import { GoArrowLeft } from "react-icons/go";
 
 const Form = ({ initialData }) => {
   const navigate = useNavigate();
@@ -93,6 +94,17 @@ const Form = ({ initialData }) => {
 
   return (
     <form onSubmit={handleOnSubmit} className="space-y-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold mb-4">{` ${
+          id ? "Update" : "Add New"
+        } Title`}</h1>
+        <div>
+          <button onClick={()=> navigate("/dashboard")} className="btn bg-red-500 text-white px-2 py-[6px] rounded flex items-center gap-1">
+            <GoArrowLeft size={20} />
+            Cancle
+          </button>
+        </div>
+      </div>
       <div className="form-group">
         <label className="block text-sm font-medium text-gray-700">Text</label>
         <ReactQuill
