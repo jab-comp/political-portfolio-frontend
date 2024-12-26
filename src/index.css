@@ -46,15 +46,7 @@ code {
 
 
 .ql-editor {
-  font-size: 3rem !important; /* Equivalent to text-6xl */
+  font-size: 2rem !important; /* Equivalent to text-6xl */
   font-weight: bold !important;
   text-align: center !important;
-}
-
-.custom-quill .ql-editor {
-  font-size: 1.8rem !important; /* Equivalent to text-6xl */
-  font-weight:500 !important;
-  text-align: left !important;
-  line-height: 40px;
-  
 }
