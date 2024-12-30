@@ -32,14 +32,14 @@ const Footer = () => {
           {/* Social Icons */}
           <div className="text-center flex flex-wrap justify-center gap-5">
             <a
-              href="#"
+              href="https://www.facebook.com/share/1BYqk9B3eH/?mibextid=wwXIfr"
               target="_blank"
               className="text-blue-700"
               rel="noopener noreferrer"
             >
               <FaFacebook size={25} className="lg:size-30" color="blue" />
             </a>
-            <a href="#" target="_blank" className="" rel="noopener noreferrer">
+            <a href="https://www.tiktok.com/@alp_guyana?_t=8sUSHMPkOXm&_r=1" target="_blank" className="" rel="noopener noreferrer">
               <FaTiktok size={25} className="lg:size-30" color="black" />
             </a>
             <a href="#" target="_blank" className="" rel="noopener noreferrer">
