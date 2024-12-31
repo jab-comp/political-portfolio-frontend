@@ -91,3 +91,20 @@ export const getContentData = async (id) => {
   const { data } = await apiGet(`/public/contents/${id}`)
   return data;
 }
+
+
+export const vote = async ({ ip, partyName }) => {
+  const response = await apiPost('/vote', { ip, partyName });
+  return response
+};
+
+export const registerVolunteer = async (payLoad) => {
+  const { data } = await apiPost('/volunteer', payLoad);
+  return data
+};
+
+
+export const getIp = async (tableName) => {
+  const { data } = await apiGet(`/get-IP/${tableName}`)
+  return data;
+}

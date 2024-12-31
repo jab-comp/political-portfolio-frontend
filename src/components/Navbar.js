@@ -1,9 +1,52 @@
 // src/components/Navbar.js
-import React from "react";
+import React , {useEffect , useState} from "react";
 import { motion } from "framer-motion";
 import logo from "../assets/images/logo.png";
+import Survey from "./Survey";
+import { getIp } from "../apis";
 
 const Navbar = () => {
+  const [surveyModalIsOpen, setSurveyModalIsOpen] = useState(false);
+  const [showButton , setShowButton] = useState(false)
+  const [alreadyVoted , setAlreadyVoted] = useState(false)
+  const [dataUpdate , setDataUpdate] = useState(false)
+
+
+  useEffect(() => {
+    const getIpAddress = async (tableName) => {
+      try {
+        const response = await getIp(tableName); 
+        return response;
+      } catch (error) {
+        console.error("Error fetching IP address:", error.message || error);
+        return null; 
+      }
+    };
+
+    const fetchIpAddresses = async () => {
+      const voteResponse = await getIpAddress("Vote");
+      const volunteerResponse = await getIpAddress("Volunteer");
+
+      if(voteResponse.message == "IP not found"){
+        setShowButton(false)
+        setSurveyModalIsOpen(true);
+      }else{
+        setAlreadyVoted(true)
+      }
+
+      if( voteResponse.message !== "IP not found"  && volunteerResponse.message == "IP not found"){
+        setShowButton(true)
+      }else{
+        setShowButton(false)
+      }
+    };
+
+    fetchIpAddresses(); 
+  }, [dataUpdate]);
+
+
+
+
   return (
     <nav className="flex items-center justify-center px-8 py-2  bg-gray-100">
       <div className="md:flex items-center justify-center space-x-2">
@@ -24,10 +67,22 @@ const Navbar = () => {
               textShadow: "0px 0px 1px rgba(0, 0, 0, 0.3)",
             }}
           >
-            Biography of Hon. Simona Broomes
+            Biography of Hon. Simona Broomes 
           </h1>
         </motion.div>
+
+        {showButton &&  
+        <button className="px-3 py-2 rounded-md bg-[#b8a725] text-white font-semibold" onClick={()=>setSurveyModalIsOpen(true)}>Become a Volunteer</button>}
+       
       </div>
+
+      <Survey
+        modalIsOpen={surveyModalIsOpen}
+        setSurveyModalIsOpen={setSurveyModalIsOpen}
+        showButton={showButton}
+        alreadyVoted={alreadyVoted}
+        setDataUpdate={setDataUpdate}
+      />
     </nav>
   );
 };
