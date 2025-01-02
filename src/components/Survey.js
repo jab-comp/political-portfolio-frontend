@@ -16,8 +16,8 @@ const Survey = ({ modalIsOpen, setSurveyModalIsOpen, showButton ,alreadyVoted  ,
     lastName: "",
     email: "",
     phone: "",
-    date: "",
-    gender: "",
+    dateOfBirth: "",
+    gender: ""
     address: "",
   });
 
@@ -231,11 +231,11 @@ const Survey = ({ modalIsOpen, setSurveyModalIsOpen, showButton ,alreadyVoted  ,
 
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <label className="block text-gray-600">Date</label>
+                      <label className="block text-gray-600">Date of Birth</label>
                       <input
                         type="date"
-                        name="date"
-                        value={volunteerFormData.date}
+                        name="dateOfBirth"
+                        value={volunteerFormData.dateOfBirth}
                         onChange={handleVolunteerFormChange}
                         className="w-full border rounded px-3 py-2"
                       />
