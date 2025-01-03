@@ -6,43 +6,43 @@ import Survey from "./Survey";
 import { getIp } from "../apis";
 
 const Navbar = () => {
-  const [surveyModalIsOpen, setSurveyModalIsOpen] = useState(false);
+  const [surveyModalIsOpen, setSurveyModalIsOpen] = useState(true);
   const [showButton , setShowButton] = useState(false)
   const [alreadyVoted , setAlreadyVoted] = useState(false)
   const [dataUpdate , setDataUpdate] = useState(false)
 
 
-  useEffect(() => {
-    const getIpAddress = async (tableName) => {
-      try {
-        const response = await getIp(tableName); 
-        return response;
-      } catch (error) {
-        console.error("Error fetching IP address:", error.message || error);
-        return null; 
-      }
-    };
+  // useEffect(() => {
+  //   // const getIpAddress = async (tableName) => {
+  //   //   try {
+  //   //     const response = await getIp(tableName); 
+  //   //     return response;
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching IP address:", error.message || error);
+  //   //     return null; 
+  //   //   }
+  //   // };
 
-    const fetchIpAddresses = async () => {
-      const voteResponse = await getIpAddress("Vote");
-      const volunteerResponse = await getIpAddress("Volunteer");
+  //   const fetchIpAddresses = async () => {
+  //     // const voteResponse = await getIpAddress("Vote");
+  //     // const volunteerResponse = await getIpAddress("Volunteer");
 
-      if(voteResponse.message == "IP not found"){
-        setShowButton(false)
-        setSurveyModalIsOpen(true);
-      }else{
-        setAlreadyVoted(true)
-      }
+  //     if(voteResponse.message == "IP not found"){
+  //       setShowButton(false)
+  //       setSurveyModalIsOpen(true);
+  //     }else{
+  //       setAlreadyVoted(true)
+  //     }
 
-      if( voteResponse.message !== "IP not found"  && volunteerResponse.message == "IP not found"){
-        setShowButton(true)
-      }else{
-        setShowButton(false)
-      }
-    };
+  //     if( voteResponse.message !== "IP not found"  && volunteerResponse.message == "IP not found"){
+  //       setShowButton(true)
+  //     }else{
+  //       setShowButton(false)
+  //     }
+  //   };
 
-    fetchIpAddresses(); 
-  }, [dataUpdate]);
+  //   fetchIpAddresses(); 
+  // }, [dataUpdate]);
 
 
 

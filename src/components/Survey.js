@@ -17,7 +17,7 @@ const Survey = ({ modalIsOpen, setSurveyModalIsOpen, showButton ,alreadyVoted  ,
     email: "",
     phone: "",
     dateOfBirth: "",
-    gender: ""
+    gender: "",
     address: "",
   });
 
@@ -50,11 +50,11 @@ const Survey = ({ modalIsOpen, setSurveyModalIsOpen, showButton ,alreadyVoted  ,
       }
       const response = await vote({ partyName: selectedParty });
       console.log("Failed to submit vote:", response);
-      debugger;
       if (response.status == 201) {
         console.log("Vote successfully submitted:", response.data);
         toast.success(response.data.message);
         setDataUpdate((prev)=>!prev)
+        setSurveyModalIsOpen(false);
       } else {
         console.log("Failed to submit vote:", response.message);
       }
@@ -64,30 +64,35 @@ const Survey = ({ modalIsOpen, setSurveyModalIsOpen, showButton ,alreadyVoted  ,
         error?.response?.data?.message
       );
       toast.error(error?.response?.data?.message);
-    } finally {
-      setSurveyModalIsOpen(false);
-    }
+    } 
   };
 
   const handleVolunteerFormSubmit = async (event) => {
     event.preventDefault();
+
+    // Validation: Check if required fields are filled
+    const { email, phone, dateOfBirth, gender ,firstName,lastName,address } = volunteerFormData;
+    if (!email || !phone || !dateOfBirth || !gender || !firstName || !lastName || !address) {
+        toast.error("All fields are required.");
+        return;
+    }
+
     console.log("Volunteer Form Data:", volunteerFormData);
 
     try {
-      const response = await registerVolunteer(volunteerFormData);
-      if(!alreadyVoted){
-        submitVote();
-      }
-      console.log(">>>>>>>>>>>", response);
-      toast.success(response.message);
-      setDataUpdate((prev)=>!prev)
+        const response = await registerVolunteer(volunteerFormData);
+        if (!alreadyVoted) {
+            submitVote();
+        }
+        console.log(">>>>>>>>>", response);
+        toast.success(response.message);
+        setDataUpdate((prev) => !prev);
+        setSurveyModalIsOpen(false);
     } catch (error) {
-      console.error("Error registering volunteer:", error);
-      toast.error(error?.response?.data?.message);
-    }finally {
-      setSurveyModalIsOpen(false);
+        console.error("Error registering volunteer:", error);
+        toast.error(error?.response?.data?.message || "An error occurred while registering volunteer.");
     }
-  };
+};
 
   return (
     <div>
