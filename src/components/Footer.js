@@ -77,7 +77,7 @@ const Footer = () => {
                 for="first_name"
                 class="block mb-2 text-sm font-medium  text-white "
               >
-                Join our Moment
+                Join our Movement
               </label>
               <input
                 type="text"
